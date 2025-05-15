@@ -1,0 +1,47 @@
+<view class="container">
+  <view class="login-box">
+    <!-- 添加logo区域 -->
+    <view class="logo-area">
+      <text class="app-name">康复助手</text>
+    </view>
+
+    <view class="title">欢迎登录</view>
+    <view class="subtitle">请使用您的账号登录系统</view>
+    
+    <!-- 优化输入框组 -->
+    <view class="input-group">
+      <view class="input-item">
+        <van-icon name="user-o" size="20px" color="#999"/>
+        <input type="text" placeholder="请输入用户名" model:value="{{username}}" />
+      </view>
+      <view class="input-item">
+        <van-icon name="lock" size="20px" color="#999"/>
+        <input type="password" placeholder="请输入密码" model:value="{{password}}" />
+      </view>
+    </view>
+
+    <!-- 验证码区域 -->
+    <view class="verify-code">
+      <view class="code-input-wrap">
+        <van-icon name="shield-o" size="20px" color="#999"/>
+        <input class="input code-input" type="text" placeholder="验证码" bindinput="onInputCode" />
+      </view>
+      <image class="code-img" src="{{verifyCodeUrl}}" bindtap="getVerifyCode"></image>
+    </view>
+
+    <!-- 登录按钮组 -->
+    <view class="btn-group">
+      <button class="login-btn" bindtap="handleLogin">登录</button>
+      <button class="wechat-btn" bindtap="onGotUserInfo">
+        <van-icon name="wechat" size="20px"/>
+        微信一键登录
+      </button>
+    </view>
+
+    <!-- 添加底部链接 -->
+    <view class="bottom-links">
+      <text class="link">忘记密码？</text>
+      <text class="link">注册账号</text>
+    </view>
+  </view>
+</view>

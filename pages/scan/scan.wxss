@@ -1,0 +1,148 @@
+/* pages/scan/scan.wxss */
+.container {
+  padding: 20rpx;
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background: #f8f8f8;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.scan-btn {
+  background: #1890ff;
+  color: white;
+  width: 100% !important;
+}
+
+.scan-btn.scanning {
+  background: #ff4d4f;
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  font-size: 28rpx;
+}
+
+.device-count {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.device-list {
+  flex: 1;
+  background: white;
+  border-radius: 12rpx;
+  padding: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.no-device {
+  text-align: center;
+  color: #999;
+  padding: 40rpx;
+}
+
+.device-item {
+  padding: 20rpx;
+  border-bottom: 1rpx solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.device-item:active {
+  background-color: #f5f5f5;
+}
+
+.device-main {
+  flex: 1;
+}
+
+.esp32-device {
+  background-color: #f0f5ff;
+}
+
+.saved-device {
+  background-color: #e6f7ff;
+}
+
+.connected-device {
+  background-color: #f6ffed;
+}
+
+.device-name {
+  font-size: 32rpx;
+  font-weight: 500;
+  margin-bottom: 8rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.device-tags {
+  display: flex;
+  gap: 10rpx;
+}
+
+.tag {
+  font-size: 22rpx;
+  padding: 2rpx 10rpx;
+  border-radius: 6rpx;
+  color: white;
+}
+
+.esp32-tag {
+  background: #722ed1;
+}
+
+.saved-tag {
+  background: #1890ff;
+}
+
+.connected-tag {
+  background: #52c41a;
+}
+
+.device-info {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.rssi {
+  margin-bottom: 6rpx;
+}
+
+.rssi-bar-container {
+  height: 6rpx;
+  background-color: #eee;
+  border-radius: 3rpx;
+  margin-top: 4rpx;
+  margin-bottom: 8rpx;
+}
+
+.rssi-bar {
+  height: 100%;
+  background-color: #1890ff;
+  border-radius: 3rpx;
+}
+
+.device-id {
+  color: #999;
+  font-size: 24rpx;
+}
+
+.device-action {
+  font-size: 26rpx;
+  color: #1890ff;
+  padding-left: 20rpx;
+}

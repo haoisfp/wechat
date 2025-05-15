@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "@vant/weapp": "^1.11.7",
+    "jsencrypt": "^3.3.2",
+    "lin-ui": "^0.9.13",
+    "wxmp-rsa": "^2.1.0"
+  },
+  "name": "miniprogram-1",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

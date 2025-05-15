@@ -1,0 +1,59 @@
+<!-- pages/scan/scan.wxml -->
+<view class="container {{isDarkMode ? 'dark' : 'light'}}">
+  <view class="header">
+    <button class="scan-btn {{scanning ? 'scanning' : ''}}" 
+            bindtap="{{scanning ? 'stopScan' : 'startScan'}}">
+      {{scanning ? '停止扫描' : '开始扫描'}}
+    </button>
+    
+    <view class="filter">
+      <switch checked="{{onlyESP32}}" bindchange="toggleFilter" />
+      <text>仅显示ESP32C6设备</text>
+    </view>
+  </view>
+
+  <view class="device-count">
+    发现设备: {{devices.length}}
+  </view>
+
+  <scroll-view class="device-list" scroll-y>
+    <view wx:if="{{devices.length === 0}}" class="no-device">
+      {{scanning ? '正在扫描...' : '未发现设备'}}
+    </view>
+    
+    <view wx:for="{{devices}}" wx:key="deviceId" 
+          class="device-item {{item.isESP32 ? 'esp32-device' : ''}} {{item.deviceId === savedDeviceId ? 'saved-device' : ''}} {{item.isConnected ? 'connected-device' : ''}}"
+          bindtap="connectDevice" 
+          data-deviceid="{{item.deviceId}}" 
+          data-devicename="{{item.name || item.localName}}">
+      
+      <view class="device-main">
+        <view class="device-name">
+          {{item.name || item.localName}}
+          <view class="device-tags">
+            <text wx:if="{{item.deviceId === savedDeviceId}}" class="tag saved-tag">已保存</text>
+            <text wx:if="{{item.isConnected}}" class="tag connected-tag">已连接</text>
+            <text wx:if="{{item.isESP32 && item.deviceId !== savedDeviceId}}" class="tag esp32-tag">ESP32C6</text>
+          </view>
+        </view>
+        
+        <view class="device-info">
+          <view class="rssi">
+            <text>信号: {{item.RSSI}}dBm</text>
+            <view class="rssi-bar-container">
+              <!-- 修复了RSSI百分比问题 -->
+              <view class="rssi-bar" style="width: {{(item.RSSI + 100) + '%'}}"></view>
+            </view>
+          </view>
+          <text class="device-id">ID: {{item.deviceId}}</text>
+        </view>
+      </view>
+      
+      <view class="device-action">
+        <text wx:if="{{item.isConnected}}">已连接</text>
+        <text wx:elif="{{connecting && item.deviceId === connectingId}}">连接中</text>
+        <text wx:else>点击连接</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>

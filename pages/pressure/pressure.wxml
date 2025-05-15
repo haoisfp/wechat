@@ -1,0 +1,108 @@
+<!--pages/pressure/pressure.wxml-->
+<view class="container {{isDarkMode ? 'dark' : 'light'}}">
+  <view class="header">
+    <van-icon name="records" size="120px"/>
+    <text class="title {{isDarkMode ? 'dark' : 'light'}}">传感器压力值</text>
+  </view>
+  
+  <view class="button-group ">
+  <!-- 按钮组 -->
+  <van-button type="primary" bind:tap="goTomoniter" custom-style="{{isDarkMode ? 'color: #4c8bf5; border-color: #f5f5f5;background-color: #f5f5f5' : ''}}">压力监测</van-button>
+  <van-button type="info" bind:tap="onCalibrateTap" custom-style="{{isDarkMode ? 'color: #4c8bf5; border-color: #f5f5f5;background-color: #f5f5f5' : ''}}">压力校准</van-button>
+  </view>
+  <!-- 添加最后更新时间显示 -->
+  <view class="last-update-time" wx:if="{{lastUpdateTime}}">
+    <text>最近更新时间: {{lastUpdateTime}}</text>
+  </view>
+<!-- 修改压力值列表的布局 -->
+<view class="pressure-list">
+    <!-- 每个压力进度条的布局结构 -->
+<view class="pressure-item" wx:for="{{pressureData}}" wx:key="index">
+  <view class="pressure-title">传感器 {{index + 1}}</view>
+  
+  <!-- 进度条形式显示 -->
+  <view class="progress-container">
+      <!-- 进度条背景 -->
+      <view class="progress-bg"></view>
+      <!-- 推荐区域 -->
+      <view class="recommend-zone" style="left: {{item.recommendMin / 100 * 100}}%; width: {{(item.recommendMax - item.recommendMin) / 100 * 100}}%;"></view>
+      <!-- 当前值进度条 -->
+      <view class="progress-bar" style="width: {{item.currentValue / 100 * 100}}%;"></view>
+      <!-- 当前值指示器 -->
+      <view class="progress-indicator" style="left: {{item.currentValue / 100 * 100}}%;"></view>
+    </view>
+  
+  <!-- 刻度和数值显示 -->
+  <view class="scale-container">
+  <view class="min-value">{{item.recommendMin/100}}N</view>
+  <view class="current-value">{{item.currentValue/100}}N</view>
+  <view class="max-value">{{item.recommendMax/100}}N</view>
+</view>
+  
+  <!-- 新增：标签说明 -->
+  <view class="pressure-labels">
+    <view class="min-label">最小推荐值</view>
+    <view class="current-label">当前压力</view>
+    <view class="max-label">最大推荐值</view>
+  </view>
+</view>
+  </view>
+  <!-- 主题切换按钮 -->
+  <van-dialog
+    use-slot
+    title="压力校准"
+    show="{{ showCalibrateDialog }}"
+    show-cancel-button="{{ showCancelButton }}"
+  confirm-button-text="{{ confirmButtonText }}"
+    bind:confirm="handleCalibrate"
+    bind:close="onDialogClose"
+    loading="{{ !webReady }}"
+    before-close="{{ beforeClose }}"
+  >
+    <view class="calibrate-dialog-content">
+    <!-- 蓝牙验证动画与提示 -->
+      <view wx:if="{{bleVerifyStatus === 'verifying'}}" class="ble-verify-status">
+        <van-loading type="spinner" size="28px" color="#1989fa"/>
+        <text class="ble-verify-message">{{bleVerifyMessage}}</text>
+      </view>
+      <view wx:elif="{{bleVerifyStatus === 'success'}}" class="ble-verify-status">
+        <van-icon name="success" color="#07c160" size="28px"/>
+        <text class="ble-verify-message" style="color:#07c160;">{{bleVerifyMessage}}</text>
+      </view>
+      <view wx:elif="{{bleVerifyStatus === 'fail'}}" class="ble-verify-status">
+        <van-icon name="close" color="#ee0a24" size="28px"/>
+        <text class="ble-verify-message" style="color:#ee0a24;">{{bleVerifyMessage}}</text>
+      </view>
+      <!-- 连接状态显示 -->
+      <view class="connection-status">
+        <van-icon 
+          name="{{ isConnected ? 'success' : 'warning-o' }}" 
+          color="{{ isConnected ? '#07c160' : '#ee0a24' }}"
+          size="20px"
+        />
+        <text class="status-text {{ isConnected ? 'connected' : 'disconnected' }}">
+          {{ isConnected ? '设备已连接' : '设备未连接' }}
+        </text>
+      </view>
+      
+      <!-- 校准提示 -->
+      <view class="calibrate-tips">
+        <text>请确保设备处于正确位置后进行校准</text>
+      </view>
+
+      <!-- 校准状态显示 -->
+    <view class="calibrate-status {{ calibrating ? 'calibrating' : '' }}">
+      <van-loading wx:if="{{ calibrating }}" type="spinner" size="24px" color="#1989fa"/>
+      <text class="calibrate-message">{{calibrateMessage}}</text>
+    </view>
+    
+    </view>
+  </van-dialog>
+  <van-tabbar active="{{ active }}" bind:change="onChange">
+    <van-tabbar-item name="index" icon="wap-home-o">首页</van-tabbar-item>
+    <van-tabbar-item name="history" icon="clock-o">历史</van-tabbar-item>
+    <van-tabbar-item name="pressure" icon="bar-chart-o">压力值</van-tabbar-item>
+    <van-tabbar-item name="exercise" icon="completed-o">康复训练</van-tabbar-item>
+    <van-tabbar-item name="setting" icon="setting-o">设置</van-tabbar-item>
+  </van-tabbar>
+</view>

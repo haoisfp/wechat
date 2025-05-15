@@ -1,0 +1,467 @@
+/* pages/device/device.wxss */
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* 顶部状态栏 */
+.header {
+  padding: 20rpx;
+  background-color: #007AFF;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  color: white;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.status-bar {
+  display: flex;
+  margin-top: 20rpx;
+}
+
+.status-item {
+  font-size: 24rpx;
+  margin-right: 20rpx;
+  padding: 6rpx 20rpx;
+  border-radius: 30rpx;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.status-item.active {
+  background-color: white;
+  color: #007AFF;
+}
+
+/* 标签页导航 - 增加间距和宽度 */
+.tab-bar {
+  display: flex;
+  background-color: #fff;
+  border-bottom: 1rpx solid #eee;
+  padding: 0 10rpx;
+  justify-content: space-between;
+  margin-top: 28rpx;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 24rpx 10rpx; /* 增加上下padding提高高度 */
+  margin: 0 8rpx; /* 增加标签间距 */
+  font-size: 28rpx;
+  color: #666;
+  position: relative;
+}
+
+.tab-item.active {
+  color: #007AFF;
+  font-weight: bold;
+}
+
+.tab-item.active:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+  height: 6rpx;
+  background-color: #007AFF;
+  border-radius: 3rpx;
+}
+
+/* 内容区域 */
+.content {
+  flex: 1;
+  overflow: hidden;
+  margin-top: 28rpx;
+
+}
+
+.tab-content {
+  padding: 20rpx;
+  height: calc(100% - 40rpx);
+  overflow-y: auto;
+}
+
+/* 设备信息卡片 */
+.info-card {
+  background-color: #fff;
+  border-radius: 10rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  margin-bottom: 30rpx;
+  /* margin-top: 20rpx; */
+}
+
+.info-item {
+  display: flex;
+  margin-bottom: 20rpx;
+  font-size: 28rpx;
+  line-height: 1.8;
+}
+
+.label {
+  color: #666;
+  width: 180rpx;
+  font-weight: 500;
+}
+
+.value {
+  flex: 1;
+  color: #333;
+}
+
+.value.paired {
+  color: #4CAF50;
+}
+
+/* 配置表单 */
+.config-form {
+  background-color: #fff;
+  border-radius: 10rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+  margin-bottom: 30rpx;
+}
+
+.form-group .label {
+  display: block;
+  margin-bottom: 10rpx;
+  font-size: 28rpx;
+  color: #666;
+  width: 100%;
+
+}
+
+.input {
+  border: 1rpx solid #ddd;
+  border-radius: 10rpx;
+  /* padding: 6rpx 4rpx; */
+  font-size: 32rpx;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #f8f8f8;
+}
+
+/* 命令列表 - 改进样式 */
+.command-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.command-item {
+  background-color: #fff;
+  border-radius: 10rpx;
+  padding: 24rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.command-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.command-name {
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.command-name.danger {
+  color: #ff4d4f;
+}
+
+.command-status-indicator {
+  font-size: 24rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
+  background-color: #f5f5f5;
+  color: #999;
+}
+
+.command-status-indicator.pending {
+  background-color: #e6f7ff;
+  color: #1890ff;
+}
+
+.command-status-indicator.sent {
+  background-color: #f0f5ff;
+  color: #1890ff;
+}
+
+.command-status-indicator.success {
+  background-color: #f6ffed;
+  color: #52c41a;
+}
+
+.command-status-indicator.error {
+  background-color: #fff2f0;
+  color: #ff4d4f;
+}
+
+.command-desc {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 16rpx;
+  display: block;
+}
+
+.command-status-message {
+  font-size: 26rpx;
+  color: #1890ff;
+  margin-bottom: 16rpx;
+  display: block;
+}
+
+.command-btn {
+  font-size: 28rpx;
+  background-color: #1890ff;
+  color: white;
+  border-radius: 30rpx;
+  padding: 12rpx 28rpx;
+  margin: 0;
+  display: inline-block;
+}
+
+.command-btn.warning {
+  background-color: #faad14;
+}
+
+/* 高级命令区域 */
+.advanced-commands {
+  margin-top: 30rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.advanced-command {
+  background-color: #fff;
+  border-radius: 10rpx;
+  padding: 24rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.advanced-btn {
+  font-size: 28rpx;
+  background-color: #1890ff;
+  color: white;
+  border-radius: 30rpx;
+  padding: 12rpx 28rpx;
+  margin: 10rpx 0 0;
+  display: inline-block;
+}
+
+.advanced-btn.danger {
+  background-color: #ff4d4f;
+}
+
+/* 命令状态 */
+.command-status {
+  margin: 16rpx 0;
+  padding: 12rpx;
+  border-radius: 6rpx;
+  font-size: 26rpx;
+}
+
+.status-text {
+  display: block;
+}
+
+.status-text.pending {
+  color: #1890ff;
+}
+
+.status-text.sent {
+  color: #1890ff;
+}
+
+.status-text.success {
+  color: #52c41a;
+}
+
+.status-text.error {
+  color: #ff4d4f;
+}
+
+/* 数据展示 */
+.data-status {
+  background-color: #fff;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  font-size: 26rpx;
+  color: #666;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.progress-bar {
+  height: 6rpx;
+  background-color: #eee;
+  border-radius: 3rpx;
+  margin-top: 10rpx;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: #007AFF;
+  border-radius: 3rpx;
+  transition: width 0.3s;
+}
+
+.data-list {
+  background-color: #f9f9f9; /* 更柔和的背景色 */
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  height: calc(100% - 400rpx);
+  display: flex;
+  flex-direction: column;
+  padding: 20rpx; /* 增加内边距，使内容不贴边 */
+  gap: 15rpx; /* 每组之间的间距 */
+  margin-top: 20rpx;
+
+}
+
+.data-card {
+  background-color: #fff; /* 每个分组单独的白色背景 */
+  border-radius: 10rpx;
+  box-shadow: 0 1rpx 5rpx rgba(0, 0, 0, 0.1); /* 更轻的阴影 */
+  padding: 20rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx; /* 信息项之间的间距 */
+  border: 1rpx solid #e6e6e6; /* 增加边框区分 */
+  /* margin-top: 10rpx; */
+}
+/* 为第一个以外的所有 .data-card 添加 margin-top */
+.data-card:not(:first-of-type) {
+  margin-top: 20rpx; /* 其他卡片的顶部间距 */
+}
+
+.data-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.data-item .label {
+  font-size: 28rpx;
+  color: #666; /* 标签颜色 */
+}
+
+.data-item .value {
+  font-size: 28rpx;
+  color: #333; /* 值的颜色 */
+  font-weight: bold;
+}
+
+/* 高级设置页 */
+.advanced-options {
+  background-color: #fff;
+  border-radius: 10rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.warning-text {
+  font-size: 26rpx;
+  color: #ff6b6b;
+  margin-bottom: 20rpx;
+}
+
+.log-section {
+  background-color: #fff;
+  border-radius: 10rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 300rpx);
+}
+
+.log-scroll {
+  flex: 1;
+  height: calc(100% - 70rpx);
+}
+
+.clear-logs {
+  font-size: 24rpx;
+  color: #999;
+  font-weight: normal;
+}
+
+.log-item {
+  font-size: 24rpx;
+  line-height: 1.6;
+  margin-bottom: 10rpx;
+  word-break: break-all;
+}
+
+.log-time {
+  color: #999;
+  margin-right: 10rpx;
+}
+
+.log-type {
+  color: #007AFF;
+  margin-right: 10rpx;
+}
+
+.log-type.error {
+  color: #ff6b6b;
+}
+
+.log-msg {
+  color: #666;
+}
+
+/* 按钮样式 */
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 30rpx;
+}
+
+.btn {
+  min-width: 200rpx;
+  margin: 0 20rpx;
+  font-size: 28rpx;
+  background-color: #007AFF;
+  color: #fff;
+  border-radius: 30rpx;
+  padding: 12rpx 0;
+}
+
+/* 无数据提示 */
+.no-data {
+  text-align: center;
+  padding: 60rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}

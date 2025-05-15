@@ -1,0 +1,96 @@
+<!-- pages/connect/connect.wxml -->
+<view class="container">
+  <view class="header">
+    <text class="title">ESP32C6 BLE测试</text>
+  </view>
+
+  <view class="device-section">
+    <block wx:if="{{hasDevice}}">
+      <view class="device-info">
+        <text class="device-name">{{deviceName || '未知设备'}}</text>
+        <view class="status-container">
+          <!-- 连接状态显示 -->
+          <text class="device-status {{isConnected ? 'connected' : (connecting ? 'connecting' : 'disconnected')}}">
+            {{isConnected ? '已连接' : (connecting ? '连接中...' : '未连接')}}
+          </text>
+
+          <!-- 验证状态显示，只有在已连接的情况下才显示 -->
+          <text wx:if="{{isConnected}}" class="verify-status {{isVerified ? 'verified' : 'unverified'}}">
+            {{isVerified ? '已验证' : '未验证'}}
+          </text>
+        </view>
+      </view>
+
+      <!-- 设备详情部分，确保验证通过后能显示信息 -->
+      <view class="device-detail" wx:if="{{isConnected}}">
+        <block wx:if="{{isVerified && deviceInfo}}">
+          <!-- 添加设备ID显示 -->
+          <view class="detail-item">
+            <text class="detail-label">设备ID:</text>
+            <text class="detail-value">{{deviceInfo.deviceId}}</text>
+          </view>
+          <view class="detail-item">
+            <text class="detail-label">固件版本:</text>
+            <text class="detail-value">{{deviceInfo.firmwareVersion || '未知'}}</text>
+          </view>
+          <view class="detail-item">
+            <text class="detail-label">硬件版本:</text>
+            <text class="detail-value">{{deviceInfo.hardwareVersion || '未知'}}</text>
+          </view>
+          <view class="detail-item">
+            <text class="detail-label">配对状态:</text>
+            <text class="detail-value"> {{deviceInfo.isPaired ? '已配对' : '未配对'}} </text>
+          </view>
+          <!-- 移除MAC地址显示 -->
+        </block>
+        <block wx:elif="{{isVerified && !deviceInfo}}">
+          <view class="detail-loading">
+            <text>获取设备信息中...</text>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="detail-loading">
+            <text>等待设备验证...</text>
+          </view>
+        </block>
+      </view>
+
+      <view class="button-group">
+        <!-- 只有当设备已验证时才能进入设备管理 -->
+        <button class="btn" bindtap="goToDevice" disabled="{{!isVerified}}">设备管理</button>
+
+      <!-- 连接/断开按钮 -->
+      <button class="btn" bindtap="{{isConnected ? 'disconnectDevice' : 'connectSavedDevice'}}" disabled="{{connecting || reconnectEn}}">
+        {{isConnected ? '断开连接' : '连接设备'}}
+      </button>
+      </view>
+      </block>
+
+    <block wx:else>
+      <view class="no-device">
+        <text>尚未添加设备</text>
+        <text class="sub-text">点击下方按钮添加设备</text>
+      </view>
+    </block>
+
+    <!-- 添加/更换设备按钮 - 无论是否正在连接都可点击 -->
+    <button class="add-btn" bindtap="goToScan">
+      {{hasDevice ? '更换设备' : '添加设备'}}
+    </button>
+  </view>
+
+  <view class="info-section">
+    <view class="info-item">
+      <text class="info-title">ESP32C6 BLE 功能</text>
+      <text class="info-desc">通过此应用可以管理和控制ESP32C6设备，实现远程监控和配置。</text>
+    </view>
+
+    <view class="info-item">
+      <text class="info-title">使用说明</text>
+      <text class="info-desc">1. 点击"添加设备"扫描并连接ESP32C6设备</text>
+      <text class="info-desc">2. 首次连接设备需要进行配对和验证操作</text>
+      <text class="info-desc">3. 验证成功后点击"设备管理"进入功能测试页面</text>
+      <text class="info-desc">4. 在功能测试页面可以读取设备信息、配置参数，并执行各种命令</text>
+    </view>
+  </view>
+</view>

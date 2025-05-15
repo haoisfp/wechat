@@ -1,0 +1,26 @@
+<!--pages/exercise/exercise.wxml-->
+<view class="container {{isDarkMode ? 'dark' : 'light'}}">
+  <!-- 教程视频按钮 -->
+  <view class="tutorial-btn">教程视频</view>
+
+  <!-- 锻炼图标 -->
+  <view class="exercise-icon">
+    <van-icon name="video" size="320rpx" color="#666"/>
+  </view>
+
+  <!-- 锻炼按钮 -->
+  <van-button 
+    custom-class="exercise-btn" 
+    round 
+    bind:tap="goToBreathingExercise"
+  >腹式呼吸锻炼</van-button>
+
+  <!-- 底部导航栏 -->
+  <van-tabbar active="{{ active }}" bind:change="onChange">
+    <van-tabbar-item name="index" icon="wap-home-o">首页</van-tabbar-item>
+    <van-tabbar-item name="history" icon="clock-o">历史</van-tabbar-item>
+    <van-tabbar-item name="pressure" icon="bar-chart-o">压力值</van-tabbar-item>
+    <van-tabbar-item name="exercise" icon="completed-o">康复训练</van-tabbar-item>
+    <van-tabbar-item name="setting" icon="setting-o">设置</van-tabbar-item>
+  </van-tabbar>
+</view>

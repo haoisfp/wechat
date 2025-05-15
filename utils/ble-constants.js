@@ -1,0 +1,16 @@
+export const BLE = {
+  SERVICE_UUID: "0000ABC0-0000-1000-8000-00805F9B34FB",
+  CHAR_UUID: {
+    INFO: "0000ABC1-0000-1000-8000-00805F9B34FB",    // 设备信息
+    CONFIG: "0000ABC2-0000-1000-8000-00805F9B34FB",  // 配置参数
+    DATA: "0000ABC3-0000-1000-8000-00805F9B34FB",    // 数据传输
+    CONTROL: "0000ABC4-0000-1000-8000-00805F9B34FB"  // 控制命令
+  },
+  COMMANDS: {
+    START_TRANSFER: 0x01,   // 开始数据传输
+    CONFIRM_PACKET: 0x02,   // 确认数据包
+    REQUEST_RETRY: 0x03,    // 请求重传
+    END_TRANSFER: 0x04,     // 结束传输
+    SET_TIME: 0x05         // 设置时间
+  }
+};

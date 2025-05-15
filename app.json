@@ -1,0 +1,33 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/pressure/pressure",
+    "pages/history/history",
+    "pages/exercise/exercise",
+    "pages/setting/setting",
+    "pages/scan/scan",
+    "pages/connect/connect",
+    "pages/device/device",
+    "pages/logs/logs",
+    "pages/breathing/breathing"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff"
+  },
+  "usingComponents": {
+    "van-tabbar": "@vant/weapp/tabbar/index",
+    "van-tabbar-item": "@vant/weapp/tabbar-item/index",
+    "van-circle": "@vant/weapp/circle/index",
+    "van-image": "@vant/weapp/image/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-button": "@vant/weapp/button/index",
+    "l-progress": "lin-ui/progress/index",
+    "van-calendar": "@vant/weapp/calendar/index"
+  },
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

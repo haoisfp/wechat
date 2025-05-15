@@ -1,0 +1,44 @@
+/* pages/exercise/exercise.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #e6e6ff;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tutorial-btn {
+  position: absolute;
+  top: 40rpx;
+  right: 40rpx;
+  background-color: #4169E1;
+  color: white;
+  padding: 16rpx 32rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+}
+
+.exercise-icon {
+  margin-top: 200rpx;
+  margin-bottom: 200rpx;  /* 增加与按钮的距离 */
+  width: 300rpx;
+  height: 300rpx;
+  opacity: 0.6;
+}
+
+.exercise-icon image {
+  width: 100%;
+  height: 100%;
+}
+
+.exercise-btn {
+  width: 400rpx !important;
+  height: 100rpx !important;
+  font-size: 36rpx !important;
+  background-color: #7B68EE !important;
+  border: none !important;
+  color: white !important;
+  font-weight: normal !important;
+}

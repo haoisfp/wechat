@@ -1,0 +1,298 @@
+<!--pages/device/device.wxml-->
+<view class="container">
+  <!-- 顶部状态栏 -->
+  <view class="header">
+    <text class="title">{{deviceName}}</text>
+    <view class="status-bar">
+      <view class="status-item {{isConnected ? 'active' : ''}}">
+        <text>连接</text>
+      </view>
+      <view class="status-item {{isPaired ? 'active' : ''}}">
+        <text>配对</text>
+      </view>
+      <view class="status-item {{isVerified ? 'active' : ''}}">
+        <text>验证</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 标签页导航 -->
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === 'info' ? 'active' : ''}}" bindtap="switchTab" data-tab="info">信息</view>
+    <view class="tab-item {{activeTab === 'config' ? 'active' : ''}}" bindtap="switchTab" data-tab="config">配置</view>
+    <view class="tab-item {{activeTab === 'commands' ? 'active' : ''}}" bindtap="switchTab" data-tab="commands">命令</view>
+    <view class="tab-item {{activeTab === 'data' ? 'active' : ''}}" bindtap="switchTab" data-tab="data">数据</view>
+    <view class="tab-item {{activeTab === 'calibration' ? 'active' : ''}}" bindtap="switchTab" data-tab="calibration">校准</view>
+    <view class="tab-item {{activeTab === 'advanced' ? 'active' : ''}}" bindtap="switchTab" data-tab="advanced">高级</view>
+  </view>
+
+  <!-- 内容区域 -->
+  <view class="content">
+    <!-- 设备信息页 -->
+    <view class="tab-content" hidden="{{activeTab !== 'info'}}">
+      <view class="info-card">
+        <block wx:if="{{deviceInfo}}">
+          <view class="info-item">
+            <text class="label">设备ID:</text>
+            <text class="value">{{deviceInfo.deviceId || '未知'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">固件版本:</text>
+            <text class="value">{{deviceInfo.firmwareVersion}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">硬件版本:</text>
+            <text class="value">{{deviceInfo.hardwareVersion}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">配对状态:</text>
+            <text class="value"> {{deviceInfo.isPaired ? '已配对' : '未配对'}} </text>
+          </view>
+          <view class="info-item">
+            <text class="label">MAC地址:</text>
+            <text class="value">{{deviceInfo.macAddress}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">启动次数:</text>
+            <text class="value">{{deviceInfo.bootCount || '0'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">存储空间:</text>
+            <text class="value">{{deviceInfo.storageDisplay || '-'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">设备时间:</text>
+            <text class="value">{{deviceInfo.formattedTime || '未同步'}}</text>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="no-data">暂无设备信息，点击刷新按钮获取</view>
+        </block>
+      </view>
+      <view class="button-group">
+        <button class="btn" bindtap="readDeviceInfo">刷新信息</button>
+      </view>
+    </view>
+
+    <!-- 设备配置页 -->
+    <view class="tab-content" hidden="{{activeTab !== 'config'}}">
+      <view class="config-form">
+        <block wx:if="{{deviceConfig}}">
+          <view class="form-group">
+            <text class="label">采样间隔 (分钟):</text>
+            <input class="input" type="number" value="{{configForm.samplingInterval}}" data-field="samplingInterval" bindinput="onConfigInput" />
+          </view>
+          <view class="form-group">
+            <text class="label">压力上限:</text>
+            <input class="input" type="digit" value="{{configForm.pressureMax || 1000}}" data-field="pressureMax" bindinput="onConfigInput" />
+          </view>
+          <view class="form-group">
+            <text class="label">压力下限:</text>
+            <input class="input" type="digit" value="{{configForm.pressureMin || 0}}" data-field="pressureMin" bindinput="onConfigInput" />
+          </view>
+
+          <!-- 添加命令状态显示 -->
+          <view class="command-status" wx:if="{{commandStatus.updateConfig.status !== 'idle'}}">
+            <text class="status-text {{commandStatus.updateConfig.status}}">{{commandStatus.updateConfig.message}}</text>
+          </view>
+
+          <view class="button-group">
+            <button class="btn" bindtap="submitConfig">保存配置</button>
+            <button class="btn" bindtap="readDeviceConfig">刷新配置</button>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="no-data">暂无配置信息，点击刷新按钮获取</view>
+          <view class="button-group">
+            <button class="btn" bindtap="readDeviceConfig">获取配置</button>
+          </view>
+        </block>
+      </view>
+    </view>
+
+    <!-- 命令页 - 改进布局和添加命令状态 -->
+    <view class="tab-content" hidden="{{activeTab !== 'commands'}}">
+      <view class="command-list">
+        <view class="command-item">
+          <view class="command-header">
+            <text class="command-name">同步时间</text>
+            <text class="command-status-indicator {{commandStatus.syncTime.status}}">
+              {{commandStatus.syncTime.status === 'idle' ? '' : 
+                commandStatus.syncTime.status === 'pending' ? '执行中' :
+                commandStatus.syncTime.status === 'sent' ? '已发送' :
+                commandStatus.syncTime.status === 'success' ? '成功' : '失败'}}
+            </text>
+          </view>
+          <text class="command-desc">将当前时间同步到设备</text>
+          <text class="command-status-message" wx:if="{{commandStatus.syncTime.message}}">{{commandStatus.syncTime.message}}</text>
+          <button class="command-btn" bindtap="syncTime">执行</button>
+        </view>
+
+        <view class="command-item">
+          <view class="command-header">
+            <text class="command-name">请求数据</text>
+            <text class="command-status-indicator {{commandStatus.requestData.status}}">
+              {{commandStatus.requestData.status === 'idle' ? '' : 
+                commandStatus.requestData.status === 'pending' ? '执行中' :
+                commandStatus.requestData.status === 'sent' ? '已发送' :
+                commandStatus.requestData.status === 'success' ? '成功' : '失败'}}
+            </text>
+          </view>
+          <text class="command-desc">获取最近24小时的数据记录</text>
+          <text class="command-status-message" wx:if="{{commandStatus.requestData.message}}">{{commandStatus.requestData.message}}</text>
+          <button class="command-btn" bindtap="requestData">执行</button>
+        </view>
+
+        <view class="command-item">
+          <view class="command-header">
+            <text class="command-name">清除数据</text>
+            <text class="command-status-indicator {{commandStatus.clearData.status}}">
+              {{commandStatus.clearData.status === 'idle' ? '' : 
+                commandStatus.clearData.status === 'pending' ? '执行中' :
+                commandStatus.clearData.status === 'sent' ? '已发送' :
+                commandStatus.clearData.status === 'success' ? '成功' : '失败'}}
+            </text>
+          </view>
+          <text class="command-desc">删除设备上存储的所有数据</text>
+          <text class="command-status-message" wx:if="{{commandStatus.clearData.message}}">{{commandStatus.clearData.message}}</text>
+          <button class="command-btn warning" bindtap="clearData">执行</button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 数据显示页 - 改进布局 -->
+    <view class="tab-content" hidden="{{activeTab !== 'data'}}">
+      <view class="data-status">
+        <text>传输状态: {{transferStatus.inProgress ? '传输中' : '空闲'}}</text>
+        <block wx:if="{{transferStatus.inProgress}}">
+          <text>进度: {{transferStatus.currentPacket}}/{{transferStatus.totalPackets || '?'}} 包 (共{{transferStatus.totalRecords || '?'}}条记录)</text>
+          <view class="progress-bar">
+            <view class="progress" style="width:{{(transferStatus.totalPackets > 0 ? transferStatus.currentPacket / transferStatus.totalPackets * 100 : 0) + '%'}}"></view>
+          </view>
+        </block>
+        <block wx:else>
+          <text>，{{transferStatus.totalRecords || '?'}}条记录</text>
+        </block>
+
+        <view class="data-list">
+          <block wx:if="{{dataRecords.length > 0}}">
+            <scroll-view scroll-y="true" class="data-scroll">
+              <block wx:for="{{dataRecords}}" wx:key="timestamp">
+                <view class="data-card">
+                  <view class="data-item">
+                    <text class="label">传感器1:</text>
+                    <text class="value">{{item.pressure1 || '未知'}}</text>
+                  </view>
+                  <view class="data-item">
+                    <text class="label">传感器2:</text>
+                    <text class="value">{{item.pressure2|| '未知'}}</text>
+                  </view>
+                  <view class="data-item">
+                    <text class="label">传感器3:</text>
+                    <text class="value">{{item.pressure3 || '未知'}}</text>
+                  </view>
+                  <view class="data-item">
+                    <text class="label">时间戳:</text>
+                    <text class="value">{{item.formattedTime}}</text>
+                  </view>
+                </view>
+              </block>
+            </scroll-view>
+          </block>
+          <block wx:else>
+            <view class="no-data">暂无数据记录</view>
+          </block>
+        </view>
+        <view class="button-group">
+          <button class="btn" bindtap="requestData">获取数据</button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 校准页面 -->
+    <view class="tab-content" hidden="{{activeTab !== 'calibration'}}">
+      <view class="info-card">
+        <block wx:if="{{calibrationInfo}}">
+          <view class="info-item">
+            <text class="label">传感器1:</text>
+            <text class="value">{{calibrationInfo.pressure1 || '未知'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">传感器2:</text>
+            <text class="value">{{calibrationInfo.pressure1}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">传感器2:</text>
+            <text class="value">{{calibrationInfo.pressure1}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">时间戳:</text>
+            <text class="value">{{calibrationInfo.timestamp}}</text>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="no-data">暂无校准数据，点击校准获取</view>
+        </block>
+      </view>
+      <view class="button-group">
+        <button class="btn" bindtap="getCalibrationInfo">校准</button>
+      </view>
+    </view>
+
+    <!-- 高级设置页 - 改进布局和添加命令状态 -->
+    <view class="tab-content" hidden="{{activeTab !== 'advanced'}}">
+      <view class="advanced-options">
+        <view class="section-title">高级选项</view>
+        <view class="warning-text">以下操作可能会影响设备正常使用，请谨慎操作</view>
+
+        <view class="advanced-commands">
+          <!-- 解除配对 -->
+          <view class="advanced-command">
+            <view class="command-header">
+              <text class="command-name danger">解除配对</text>
+              <text class="command-status-indicator {{commandStatus.unpairDevice.status}}">
+                {{commandStatus.unpairDevice.status === 'idle' ? '' : 
+                  commandStatus.unpairDevice.status === 'pending' ? '执行中' :
+                  commandStatus.unpairDevice.status === 'sent' ? '已发送' :
+                  commandStatus.unpairDevice.status === 'success' ? '成功' : '失败'}}
+              </text>
+            </view>
+            <text class="command-desc">断开并解除与设备的配对关系</text>
+            <text class="command-status-message" wx:if="{{commandStatus.unpairDevice.message}}">{{commandStatus.unpairDevice.message}}</text>
+            <button class="advanced-btn danger" bindtap="unpairDevice">解除配对</button>
+          </view>
+
+          <!-- 工厂重置 -->
+          <view class="advanced-command">
+            <view class="command-header">
+              <text class="command-name danger">工厂重置</text>
+              <text class="command-status-indicator {{commandStatus.factoryReset.status}}">
+                {{commandStatus.factoryReset.status === 'idle' ? '' : 
+                  commandStatus.factoryReset.status === 'pending' ? '执行中' :
+                  commandStatus.factoryReset.status === 'sent' ? '已发送' :
+                  commandStatus.factoryReset.status === 'success' ? '成功' : '失败'}}
+              </text>
+            </view>
+            <text class="command-desc">恢复设备到出厂设置状态（所有数据和配置将丢失）</text>
+            <text class="command-status-message" wx:if="{{commandStatus.factoryReset.message}}">{{commandStatus.factoryReset.message}}</text>
+            <button class="advanced-btn danger" bindtap="factoryReset">工厂重置</button>
+          </view>
+        </view>
+      </view>
+
+      <view class="log-section">
+        <view class="section-title">
+          <text>操作日志</text>
+          <text class="clear-logs" bindtap="clearLogs">清除</text>
+        </view>
+        <scroll-view scroll-y="true" class="log-scroll">
+          <view class="log-item" wx:for="{{logs}}" wx:key="index">
+            <text class="log-time">{{item.time}}</text>
+            <text class="log-type {{item.type === '错误' ? 'error' : ''}}">【{{item.type}}】</text>
+            <text class="log-msg">{{item.message}}</text>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+</view>

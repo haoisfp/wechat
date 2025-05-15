@@ -1,0 +1,32 @@
+<!--pages/breathing/breathing.wxml-->
+<view class="container">
+  <view class="tutorial-btn">教程视频</view>
+
+<!-- 锻炼图标 -->
+<view class="exercise-icon">
+  <van-icon name="video" size="320rpx" color="#666"/>
+</view>
+
+<!-- 操作按钮区域 -->
+<view class="button-container">
+    <van-button custom-class="action-btn" round bind:tap="startExercise">开始</van-button>
+    <van-button custom-class="action-btn" round bind:tap="endExercise">结束</van-button>
+  </view>
+
+  <!-- 锻炼数据 -->
+  <view class="exercise-data">
+    <view class="data-item">
+      <text class="label">锻炼时间</text>
+      <text class="value">{{minutes}}分{{seconds}}秒</text>
+    </view>
+    <view class="data-item">
+      <text class="label">次数统计</text>
+      <text class="value">{{count}}次</text>
+    </view>
+  </view>
+
+  <!-- 退出按钮 -->
+  <van-button custom-class="quit-btn" round bind:tap="quitExercise">退出</van-button>
+
+  
+</view>

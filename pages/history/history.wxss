@@ -1,0 +1,135 @@
+/* pages/history/history.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #e6f3ff;
+  padding: 20rpx 0;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  padding: 40rpx 0 60rpx 0;
+}
+
+.history-list {
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.history-list.dark{
+  border-color:#eeeeee;
+}
+
+.history-item {
+  background: #ffffff;
+  border-radius: 30rpx;
+  padding: 80rpx 60rox;
+  margin-bottom: 40rpx;
+  min-height: 160rpx;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.history-item.dark{
+  border-color:#eeeeee;
+  background-color: #f8f8f8;
+}
+.scroll-container {
+  flex: 1;
+  height: 0; 
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 40rpx;
+  right: 40rpx;
+  width: 100rpx;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+/* 深色模式下的主题切换按钮 */
+.dark .theme-toggle {
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+
+/* 深色模式下的历史记录项 */
+.dark .history-item {
+  background: #374151;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.2);
+}
+
+.date-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* 垂直居中 */
+  height: 100%; 
+  padding-left: 20rpx;
+}
+
+.weekday {
+  font-size: 40rpx;
+  color: #333;
+  margin-bottom: 20rpx;
+  font-weight: 500;
+}
+/* 深色模式下的星期几文本 */
+.weekday.dark {
+  color: #e5e7eb;
+}
+
+.date {
+  font-size: 32rpx;
+  color: #666;
+}
+/* 深色模式下的日期文本 */
+.date.dark {
+  color: #e5e7eb;
+}
+
+
+.duration {
+  width: 160rpx;
+  text-align: center; /* 居中显示文本 */
+  display: inline-block; /* 确保宽度生效 */
+  padding: 20rpx 44rpx;  /* 添加一些内边距，使文本不会太靠近边缘 */
+  box-sizing: border-box; /* 确保内边距不会增加总宽度 */
+  white-space: nowrap; /* 防止文本换行 */
+  border-radius: 30rpx;
+  font-size: 34rpx;
+  font-weight: 500;
+  margin-right: 20rpx; 
+}
+
+.duration.red {
+  background-color: #ffe4e4;
+  color: #ff4d4f;
+}
+/* 深色模式下的红色持续时间 */
+.dark .duration.red {
+  background-color: rgba(255, 77, 79, 0.2);
+  color: #ff7875;
+}
+
+.duration.green {
+  background-color: #e6f7e6;
+  color: #52c41a;
+}
+
+/* 深色模式下的绿色持续时间 */
+.dark .duration.green {
+  background-color: rgba(82, 196, 26, 0.2);
+  color: #73d13d;
+}

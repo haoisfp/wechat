@@ -1,0 +1,34 @@
+<!--pages/history/history.wxml-->
+<view class="container {{isDarkMode ? 'dark' : ''}}">
+  <view class="header">
+    <van-icon name="calendar-o" size="320rpx" color="{{isDarkMode ? '#e5e7eb' : '#666666'}}"/>
+  </view>
+  <scroll-view 
+    scroll-y 
+    class="scroll-container"
+    refresher-enabled="{{true}}"
+    refresher-triggered="{{isRefreshing}}"
+    bindrefresherrefresh="onRefresh"
+  >
+  <view class="history-list {{isDarkMode ? 'dark' : ''}}">
+    <view class="history-item {{isDarkMode ? 'dark' : ''}}" wx:for="{{historyList}}" wx:key="date">
+      <view class="date-info">
+        <text class="weekday {{isDarkMode ? 'dark' : ''}}">{{item.weekday}}</text>
+        <text class="date {{isDarkMode ? 'dark' : ''}}">{{item.date}}</text>
+      </view>
+      <view class="duration {{item.status}} {{isDarkMode ? 'dark' : ''}}">
+            {{item.duration}}
+          </view>
+    </view>
+  </view>
+</scroll-view>
+  <van-tabbar active="{{ active }}" bind:change="onChange" active-color="{{isDarkMode ? '#81c784' : '#4caf50'}}"
+    inactive-color="{{themeData.iconColor}}"
+    background="{{themeData.headerBackground}}">
+    <van-tabbar-item name="index" icon="wap-home-o">首页</van-tabbar-item>
+    <van-tabbar-item name="history" icon="clock-o">历史</van-tabbar-item>
+    <van-tabbar-item name="pressure" icon="bar-chart-o">压力值</van-tabbar-item>
+    <van-tabbar-item name="exercise" icon="completed-o">康复训练</van-tabbar-item>
+    <van-tabbar-item name="setting" icon="setting-o">设置</van-tabbar-item>
+  </van-tabbar>
+</view>

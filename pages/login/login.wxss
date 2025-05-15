@@ -1,0 +1,245 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* 改为顶部对齐 */
+  padding: 100rpx 40rpx 40rpx; /* 减少顶部padding */
+  position: relative;
+  overflow: hidden;
+  /* 使用更柔和的渐变背景 */
+  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+}
+
+/* 调整动态背景位置 */
+.container::before {
+  background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+  top: -100rpx; /* 上移 */
+  left: -200rpx;
+  animation-delay: 0s;
+}
+
+.container::after {
+  background: linear-gradient(135deg, #b2fefa 0%, #0ed2f7 100%);
+  bottom: -100rpx;
+  right: -200rpx;
+  animation-delay: -5s;
+}
+
+.login-box {
+  width: 90%;
+  padding: 40rpx;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 添加浮动动画 */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-30rpx) scale(1.05);
+  }
+}
+
+.logo-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.app-name {
+  font-size: 36rpx;
+  color: #333;
+  font-weight: bold;
+}
+
+/* 标题样式优化 */
+.title {
+  font-size: 40rpx;
+  background: linear-gradient(135deg, #333 0%, #666 100%);
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 26rpx;
+  color: #666;
+  text-align: center;
+  margin-bottom: 50rpx;
+  letter-spacing: 2rpx;
+}
+
+.input-group {
+  margin-bottom: 30rpx;
+}
+
+/* 输入框样式优化 */
+.input-item {
+  display: flex;
+  align-items: center;
+  height: 90rpx;
+  padding: 0 30rpx;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 45rpx;
+  margin-bottom: 20rpx;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.input-item:focus-within {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 20rpx rgba(102, 166, 255, 0.2);
+  transform: translateY(-2rpx);
+}
+
+.verify-code {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 40rpx;
+}
+
+/* 验证码输入框样式 */
+.code-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 90rpx;
+  padding: 0 30rpx;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 45rpx;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.code-input {
+  flex: 1;
+  margin-left: 20rpx;
+  font-size: 28rpx;
+}
+
+.code-img {
+  width: 200rpx;
+  height: 90rpx;
+  border-radius: 45rpx;
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.login-btn {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  background: #007AFF;
+  color: #fff;
+  border-radius: 4rpx;
+  font-size: 32rpx;
+  margin-bottom: 20rpx;
+}
+
+.login-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(45deg);
+  animation: shine 3s infinite;
+}
+.login-btn:active {
+  transform: scale(0.98);
+  background: linear-gradient(135deg, #0052cc 0%, #004099 100%);
+}
+
+
+.wechat-btn {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  background: #07C160;
+  color: #fff;
+  border-radius: 4rpx;
+  font-size: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wechat-btn van-icon {
+  margin-right: 10rpx;
+}
+
+/* 添加光效动画 */
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(45deg);
+  }
+}
+
+/* 底部链接样式 */
+.bottom-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30rpx;
+  font-size: 28rpx;
+  color: #007AFF;
+}
+
+.link {
+  font-size: 26rpx;
+  color: #4d8fef;
+  position: relative;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  bottom: -4rpx;
+  left: 0;
+  width: 100%;
+  height: 2rpx;
+  background: #4d8fef;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.link:active::after {
+  transform: scaleX(1);
+}
+
+/* 输入框placeholder样式 */
+input::placeholder {
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 添加输入框激活态 */
+.input-item:focus-within,
+.code-input-wrap:focus-within {
+  background: #fff;
+  box-shadow: 0 0 0 2rpx rgba(0, 102, 255, 0.2);
+}

@@ -1,0 +1,72 @@
+<!--pages/setting/setting.wxml-->
+<view class="container {{isDarkMode ? 'dark' : ''}}">
+  <scroll-view scroll-y class="scroll-container">
+  <!-- 用户信息区域 -->
+  <view class="header">
+  <button open-type="chooseAvatar" bindchooseavatar="getAvatar" class="avatar-button">
+    <image src="{{avatarUrl}}"  mode="aspectFill" class="avatar-image"/>
+  </button>
+    </view>
+  <!-- 设置列表 -->
+  <view class="settings-list {{isDarkMode ? 'dark' : ''}}" >
+    <view class="setting-item {{isDarkMode ? 'dark' : ''}}" bindtap="handleDeviceConnect" >
+      <view class="item-content">
+        <van-icon name="add-square" size="40rpx" color="{{themeData.iconColor}}"/>
+          <text style="color: {{isDarkMode ? '#e5e7eb' : themeData.textColor}};">设备连接</text>
+      </view>
+      <van-icon name="arrow" color="{{themeData.iconColor}}"/>
+    </view>
+
+    <view class="setting-item {{isDarkMode ? 'dark' : ''}}" bindtap="handleDataSync">
+      <view class="item-content">
+        <van-icon wx:if="{{!isLoading}}" name="replay" size="40rpx" color="{{themeData.iconColor}}"/>
+          <van-loading wx:else size="40rpx" color="{{themeData.iconColor}}"/>
+          <text style="color: {{isDarkMode ? '#e5e7eb' : themeData.textColor}};">{{isLoading ? '同步中...' : '数据同步'}}</text>
+        </view>
+        <van-icon name="arrow" color="{{themeData.iconColor}}"/>
+      </view>
+
+      <view class="setting-item {{isDarkMode ? 'dark' : ''}}" bindtap="toggleTheme">
+      <view class="item-content">
+        <van-icon name="{{isDarkMode ? 'clock' : 'star'}}" size="40rpx" color="{{themeData.iconColor}}"/>
+          <text style="color: {{isDarkMode ? '#e5e7eb' : themeData.textColor}};">{{isDarkMode ? '日间模式' : '夜间模式'}}</text>
+        </view>
+        <van-icon name="arrow" color="{{themeData.iconColor}}"/>
+      </view>
+
+    <view class="setting-item {{isDarkMode ? 'dark' : ''}}" bindtap="handleLanguage">
+      <view class="item-content">
+        <van-icon name="chat" size="40rpx" color="{{themeData.iconColor}}"/>
+          <text style="color: {{isDarkMode ? '#e5e7eb' : themeData.textColor}};">语言</text>
+        </view>
+        <van-icon name="arrow" color="{{themeData.iconColor}}"/>
+      </view>
+
+    <view class="setting-item {{isDarkMode ? 'dark' : ''}}" bindtap="handleFeedback">
+      <view class="item-content">
+        <van-icon name="comment" size="40rpx" color="{{themeData.iconColor}}"/>
+          <text style="color: {{isDarkMode ? '#e5e7eb' : themeData.textColor}};">意见反馈</text>
+        </view>
+        <van-icon name="arrow" color="{{themeData.iconColor}}"/>
+      </view>
+    
+    <view class="setting-item logout-item {{isDarkMode ? 'dark' : ''}}" bindtap="handleLogout">
+        <view class="item-content">
+          <van-icon name="close" size="40rpx" color="{{themeData.logoutColor}}"/>
+          <text class="logout-text" style="color: {{themeData.logoutColor}};">退出登录</text>
+        </view>
+        <van-icon name="arrow" color="{{themeData.iconColor}}"/>
+      </view>
+    </view>
+</scroll-view>
+  <van-tabbar active="{{ active }}" bind:change="onChange" active-color="{{themeData.tabbarActive}}"
+    inactive-color="{{themeData.tabbarInactive}}"
+    background="{{themeData.tabbarBg}}">
+    <van-tabbar-item name="index" icon="wap-home-o">首页</van-tabbar-item>
+    <van-tabbar-item name="history" icon="clock-o">历史</van-tabbar-item>
+    <van-tabbar-item name="pressure" icon="bar-chart-o">压力值</van-tabbar-item>
+    <van-tabbar-item name="exercise" icon="completed-o">康复训练</van-tabbar-item>
+    <van-tabbar-item name="setting" icon="setting-o">设置</van-tabbar-item>
+  </van-tabbar>
+
+</view>
